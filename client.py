@@ -42,6 +42,7 @@ entrenadores = {
 def conectarServidor(socket):
 #cominzo de la conexion con el codigo 10 representado en 1 byte
     codigo = (10).to_bytes(1, byteorder="little")
+    print(codigo)
 #Aqui el codigo que mandamos esta conformado por el codigo de inicio 10
     socket.send(codigo)
     return None
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         print("Servidor no disponible")
         exit(404)
 
-    print("Bienvenido entrenador al fascinante mundo de pokemon =) \n")
+    print("Bienvenido entrenador al fascinante mundo de pokemon =)")
 
     try:
         conectarServidor(s)
