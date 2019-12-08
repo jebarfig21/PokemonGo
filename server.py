@@ -39,8 +39,8 @@ entrenadores = {
         'atrapados': []}}
 
 class servidor:
-	#Iniciamos nuestro objeto
-	def __init__(self, host, port):
+    #Iniciamos nuestro objeto
+    def __init__(self, host, port):
         self.host = host
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -48,20 +48,20 @@ class servidor:
 
 
     def pedirEntrenador(client, address):
-    	#Solicitamos el id del entrenador
+        #Solicitamos el id del entrenador
         client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
-    	codigo = client.recv(2)
-    	id_entrenador = codigo[0]
-    	#El id no esta en nuetra lista
-    	if (id_entrenador not in entrenadores):
-    		return {}
+        codigo = client.recv(2)
+        id_entrenador = codigo[0]
+        #El id no esta en nuetra lista
+        if (id_entrenador not in entrenadores):
+            return {}
 
         return entrenadores.get(id_entrenador)
-    	
+    
 
 
     def escucha(self):
-    	self.sock.listen(5)
+        self.sock.listen(5)
         while True:
             #Siempre escuchamos nuevas peticiones
             client, address = self.socket.accept()
@@ -84,7 +84,7 @@ class servidor:
 
             entrenador = pedirEntrenador(client, address)
             if entrenador == {}:
-            	self.close_connection(client)
+                self.close_connection(client)
                 return False
 
             self.print_socket_message(client, str(entrenador))

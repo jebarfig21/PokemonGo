@@ -28,7 +28,7 @@ pokemones = {
 #Entrenadores disponibles
 entrenadores = {
     1: {'id': 1,
-    	'entrenador': "Manuel",
+        'entrenador': "Manuel",
         'atrapados': []},
     2: {'id': 2,
         'entrenador': "Diana",
@@ -55,11 +55,11 @@ def conectarServidor(socket):
 
 
 def obteberEntrenador(socket):
-	respuesta = socket.recv(2)
+    respuesta = socket.recv(2)
     if response[0] != SOLICITAR_ENTRENADOR: #codigo 11 
             print("El codigo enviado no es el correcto")
         return None
-	try:
+    try:
         print("Introduce el id de tu entrenador:")
         IDentrenador = input()
     except ValueError:
