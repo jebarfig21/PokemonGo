@@ -61,7 +61,7 @@ class servidor:
 
 
     def escucha(self):
-        self.sock.listen(5)
+        self.socket.listen(5)
         while True:
             #Siempre escuchamos nuevas peticiones
             client, address = self.socket.accept()
