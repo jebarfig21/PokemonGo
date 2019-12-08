@@ -47,7 +47,7 @@ class servidor:
         self.socket.bind((self.host, self.port))
 
 
-    def pedirEntrenador(client, address):
+    def pedirEntrenador(self,client, address):
         #Solicitamos el id del entrenador
         client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
         codigo = client.recv(2)
