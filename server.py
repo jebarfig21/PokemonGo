@@ -52,7 +52,7 @@ class servidor:
         #Solicitamos el id del entrenador
         client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
         codigo = client.recv(2)
-        #print (codigo)
+        print (codigo)
         id_entrenador = codigo[0]
         #El id no esta en nuetra lista
         if (id_entrenador > 3):
@@ -64,7 +64,7 @@ class servidor:
         codigo = client.recv(2)
         print (codigo)
         cod = codigo[0]
-        if cod != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
+        if int.from_bytes(cod, byteorder='big') != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
             #y mandamos un codigo de error
             return False
 
