@@ -76,7 +76,7 @@ class servidor:
             print(client.getpeername()[0] + ' : ' + 'conectado')
             codigo = client.recv(2)
             cod = codigo[0]
-            if code != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
+            if cod != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
             #y mandamos un codigo de error
                 client.send((ERROR_CODIGO).to_bytes(1, byteorder="little"))
                 print(client.getpeername()[0] + ' : ' + 'desconectado')
