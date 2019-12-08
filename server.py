@@ -51,6 +51,7 @@ class servidor:
         #Solicitamos el id del entrenador
         client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
         codigo = client.recv(2)
+        print (codigo)
         id_entrenador = codigo[0]
         #El id no esta en nuetra lista
         if (id_entrenador not in entrenadores):
