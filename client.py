@@ -42,12 +42,6 @@ entrenadores = {
 def conectarServidor(socket):
 #cominzo de la coneccion con el codigo 10 representado en 1 byte
     codigo = (10).to_bytes(1, byteorder="little")
-    try:
-        print("Introduce el id de tu entrenador:")
-        IDentrenador = input()
-    except ValueError:
-        print('Numero de ID no reconocido')
-        raise Exception
 #Aqui el codigo que mandamos esta conformado por el codigo de inicio 10
     socket.send(codigo)
     return None
