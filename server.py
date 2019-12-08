@@ -48,8 +48,6 @@ class servidor:
 
 
     def pedirEntrenador(self,client, address):
-        #Solicitamos el id del entrenador
-        client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
         codigo = client.recv(2)
         print (codigo)
         id_entrenador = codigo[0]
@@ -83,6 +81,8 @@ class servidor:
                 client.close()
                 return False
 
+             #Solicitamos el id del entrenador
+            client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
             entrenador = self.pedirEntrenador(client, address)
             if entrenador == {}:
                 print(client.getpeername()[0] + ' : ' + 'desconectado')
