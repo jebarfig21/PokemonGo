@@ -49,14 +49,13 @@ def conectarServidor(socket):
         print('Numero de ID no reconocido')
         raise Exception
 #Aqui el codigo que mandamos esta conformado por el codigo de inicio 10
-    codigo = codigo
-    socket.send()
+    socket.send(codigo)
     return None
 
 
 def obteberEntrenador(socket):
     respuesta = socket.recv(2)
-    if response[0] != SOLICITAR_ENTRENADOR: #codigo 11 
+    if respuesta[0] != SOLICITAR_ENTRENADOR: #codigo 11 
             print("El codigo enviado no es el correcto")
             return None
     try:
@@ -68,7 +67,7 @@ def obteberEntrenador(socket):
 #Aqui el codigo que mandamos esta conformado por 
 #el id del entrenador en forma de 1 byte
     codigo = (IDentrenador).to_bytes(1, byteorder="little")
-    socket.send()
+    socket.send(codigo)
     return entrenador.get(IDentrenador)
 
 
