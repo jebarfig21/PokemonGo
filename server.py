@@ -86,7 +86,7 @@ class servidor:
     def conexionCliente(self, client, address):
         try:
             print(client.getpeername()[0] + ' : ' + 'conectado')
-            comprueba = self.comprueba10()
+            comprueba = self.comprueba10(client, address)
             if comprueba == False:
                 data = get_code_bytes(ERROR_CODIGO)
                 client.send(data)
