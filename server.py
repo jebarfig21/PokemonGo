@@ -63,7 +63,7 @@ class servidor:
     def escucha(self):
     	self.sock.listen(5)
         while True:
-            #Siempre scuchamos nuevas peticiones
+            #Siempre escuchamos nuevas peticiones
             client, address = self.socket.accept()
             # Ponemos nuetro Time Out
             client.settimeout(60)
@@ -77,7 +77,7 @@ class servidor:
             codigo = client.recv(2)
             cod = codigo[0]
             if code != CLIENT_CAPTURE: #Si el codigo enviado no fue 10, terminamos la conexion
-            #mandamos un codigo de error
+            #y mandamos un codigo de error
                 client.send((ERROR_CODIGO).to_bytes(1, byteorder="little"))
                 self.close_connection(client)
                 return False
@@ -93,8 +93,6 @@ class servidor:
 
         except socket.timeout:
             self.print_socket_message(client, "TIMEOUT")
-          
-
             self.close_connection(client)
             return False
 

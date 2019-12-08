@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print("Bienvenido entrenador al fascinante mundo de pokemon =) \n")
 
     try:
-        connect_to_server(s)
+        conectarServidor(s)
         trainer = obtenerEntrenador(s)
         print trainer
     except:
