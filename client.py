@@ -58,7 +58,7 @@ def obteberEntrenador(socket):
     respuesta = socket.recv(2)
     if response[0] != SOLICITAR_ENTRENADOR: #codigo 11 
             print("El codigo enviado no es el correcto")
-        return None
+            return None
     try:
         print("Introduce el id de tu entrenador:")
         IDentrenador = input()
@@ -88,8 +88,8 @@ if __name__ == "__main__":
 
     try:
         conectarServidor(s)
-        trainer = obtenerEntrenador(s)
-        print trainer
+        entrenador = obtenerEntrenador(s)
+        print (entrenador)
     except:
         print("A ocurrido un error en la conexion y se cerrara.")
         s.send((ERROR_CONEXION).to_bytes(1, byteorder="little"))

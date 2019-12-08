@@ -73,27 +73,30 @@ class servidor:
 
     def conexionCliente(self, client, address):
         try:
-            self.print_socket_message(client, 'conectado')
+            print(client.getpeername()[0] + ' : ' + 'conectado')
             codigo = client.recv(2)
             cod = codigo[0]
-            if code != CLIENT_CAPTURE: #Si el codigo enviado no fue 10, terminamos la conexion
+            if code != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
             #y mandamos un codigo de error
                 client.send((ERROR_CODIGO).to_bytes(1, byteorder="little"))
-                self.close_connection(client)
+                print(client.getpeername()[0] + ' : ' + 'desconectado')
+                client.close()
                 return False
 
             entrenador = pedirEntrenador(client, address)
             if entrenador == {}:
-                self.close_connection(client)
+                print(client.getpeername()[0] + ' : ' + 'desconectado')
+                client.close()
                 return False
 
-            self.print_socket_message(client, str(entrenador))
+            print(client.getpeername()[0] + ' : ' + entrenador)
 
 
 
         except socket.timeout:
-            self.print_socket_message(client, "TIMEOUT")
-            self.close_connection(client)
+            print(client.getpeername()[0] + ' : ' + 'TIMEOUT')
+            print(client.getpeername()[0] + ' : ' + 'desconectado')
+            client.close()
             return False
 
 
