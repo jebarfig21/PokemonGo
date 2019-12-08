@@ -82,8 +82,8 @@ if __name__ == "__main__":
 
     try:
         conectarServidor(s)
-        entrenador = obtenerEntrenador(s)
-        print (entrenador)
+        obtenerEntrenador(s)
+        #print (entrenador)
     except:
         print("A ocurrido un error en la conexion y se cerrara.")
         s.send((ERROR_CONEXION).to_bytes(1, byteorder="little"))
