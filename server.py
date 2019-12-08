@@ -55,7 +55,7 @@ class servidor:
         #El id no esta en nuetra lista
         if (id_entrenador not in entrenadores):
             return {}
-    return entrenadores.get(id_entrenador)
+        return entrenadores.get(id_entrenador)
     
 
 
@@ -82,7 +82,7 @@ class servidor:
                 client.close()
                 return False
 
-            entrenador = pedirEntrenador(client, address)
+            entrenador = self.pedirEntrenador(client, address)
             if entrenador == {}:
                 print(client.getpeername()[0] + ' : ' + 'desconectado')
                 client.close()
