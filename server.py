@@ -101,5 +101,4 @@ if __name__ == "__main__":
     print("Servidor iniciado")
     print("en espera")
     #escuchando en el puerto 9999
-    servidor('', 9999)
-    servidor.escucha()
+    servidor('', 9999).escucha()
