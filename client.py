@@ -40,7 +40,7 @@ entrenadores = {
 
 
 def conectarServidor(socket):
-#cominzo de la coneccion con el codigo 10 representado en 1 byte
+#cominzo de la conexion con el codigo 10 representado en 1 byte
     codigo = (10).to_bytes(1, byteorder="little")
 #Aqui el codigo que mandamos esta conformado por el codigo de inicio 10
     socket.send(codigo)

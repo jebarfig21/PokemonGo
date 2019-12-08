@@ -44,17 +44,31 @@ class servidor:
         self.host = host
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.host, self.port))
 
 
     def pedirEntrenador(self,client, address):
+        #Solicitamos el id del entrenador
+        client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
         codigo = client.recv(2)
         print (codigo)
         id_entrenador = codigo[0]
         #El id no esta en nuetra lista
-        if (id_entrenador not in entrenadores):
+        if (id_entrenador > 3):
             return {}
         return entrenadores.get(id_entrenador)
+
+
+    def comprueba10(self,client, address):
+        codigo = client.recv(2)
+        print (codigo)
+        cod = codigo[0]
+        if cod != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
+            #y mandamos un codigo de error
+            return False
+
+        return True
     
 
 
@@ -72,17 +86,13 @@ class servidor:
     def conexionCliente(self, client, address):
         try:
             print(client.getpeername()[0] + ' : ' + 'conectado')
-            codigo = client.recv(2)
-            cod = codigo[0]
-            if cod != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
-            #y mandamos un codigo de error
-                client.send((ERROR_CODIGO).to_bytes(1, byteorder="little"))
-                print(client.getpeername()[0] + ' : ' + 'desconectado')
-                client.close()
+            comprueba = comprueba10()
+            if comprueba == False:
+                data = get_code_bytes(ERROR_CODIGO)
+                client.send(data)
+                self.close_connection(client)
                 return False
-
-             #Solicitamos el id del entrenador
-            client.send((SOLICITAR_ENTRENADOR).to_bytes(1, byteorder="little"))
+                        
             entrenador = self.pedirEntrenador(client, address)
             if entrenador == {}:
                 print(client.getpeername()[0] + ' : ' + 'desconectado')
@@ -90,8 +100,6 @@ class servidor:
                 return False
 
             print(client.getpeername()[0] + ' : ' + entrenador)
-
-
 
         except socket.timeout:
             print(client.getpeername()[0] + ' : ' + 'TIMEOUT')
