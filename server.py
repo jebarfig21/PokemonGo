@@ -64,6 +64,7 @@ class servidor:
         codigo = client.recv(2)
         print (codigo)
         cod = codigo[0]
+        print cod
         if cod != SOLICITAR_CAPTURA: #Si el codigo enviado no fue 10, terminamos la conexion
             #y mandamos un codigo de error
             return False
