@@ -44,7 +44,6 @@ class servidor:
         self.host = host
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.host, self.port))
 
 
@@ -89,10 +88,8 @@ class servidor:
             print(client.getpeername()[0])
             comprueba = self.comprueba10(client, address)
             if comprueba == False:
-                #data = get_code_bytes(ERROR_CODIGO)
                 data = bytes([41])
                 client.send(data)
-                #self.close_connection(client)
                 client.close()
                 return False
 
@@ -102,11 +99,9 @@ class servidor:
                 client.close()
                 return False
 
-            #print(client.getpeername()[0] + ' : ' + entrenador)
-            print(client.getpeername()[0])
+            print(client.getpeername()[0] + ' : ' + entrenador)
         except socket.timeout:
             print(client.getpeername()[0] + ' : ' + 'TIMEOUT')
-            print(client.getpeername()[0] + ' : ' + 'desconectado')
             client.close()
             return False
 

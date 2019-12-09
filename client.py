@@ -69,7 +69,7 @@ def obtenerEntrenador(socket):
     print (codigo)
     socket.send(codigo)
     print("saliendo obtenerEntrenador")
-    return entrenadores.get(IDentrenador)
+    return entrenadores[IDentrenador]["entrenador"]
     #return None
 
 def get_pokemon(pokemon_id):
@@ -93,9 +93,9 @@ if __name__ == "__main__":
 
     try:
         conectarServidor(s)
-        ##get_pokemon("pikachu")
         entrenador= obtenerEntrenador(s)
-        print (entrenador)
+        print ("Bienvenido "+ entrenador)
+        
     except:
         print("A ocurrido un error en la conexion y se cerrara.")
         s.send((ERROR_CONEXION).to_bytes(1, byteorder="little"))
