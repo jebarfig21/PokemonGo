@@ -1,3 +1,4 @@
+#Programa que controla una conexión del lado del servidor para nuestro programa de pokemon Go.
 import socket
 
 PUERTO = 9999
