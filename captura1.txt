@@ -1,0 +1,24 @@
+23:25:20.033096 IP localhost.localdomain.59790 > 192.168.10.109.mysql: Flags [S], seq 511828553, win 64240, options [mss 1460,sackOK,TS val 3279312413 ecr 0,nop,wscale 7], length 0
+23:25:26.968375 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [S], seq 1298042092, win 64240, options [mss 1460,sackOK,TS val 1356302593 ecr 0,nop,wscale 7], length 0
+23:25:26.968464 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [S.], seq 3068274158, ack 1298042093, win 65160, options [mss 1460,sackOK,TS val 2137209728 ecr 1356302593,nop,wscale 7], length 0
+23:25:26.970160 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [.], ack 1, win 502, options [nop,nop,TS val 1356302595 ecr 2137209728], length 0
+23:25:26.971001 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [P.], seq 1:2, ack 1, win 502, options [nop,nop,TS val 1356302595 ecr 2137209728], length 1
+23:25:26.971066 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [.], ack 2, win 510, options [nop,nop,TS val 2137209731 ecr 1356302595], length 0
+23:25:26.971168 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [P.], seq 1:2, ack 2, win 510, options [nop,nop,TS val 2137209731 ecr 1356302595], length 1
+23:25:26.973528 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [.], ack 2, win 502, options [nop,nop,TS val 1356302598 ecr 2137209731], length 0
+23:25:33.096344 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [P.], seq 2:3, ack 2, win 502, options [nop,nop,TS val 1356308721 ecr 2137209731], length 1
+23:25:33.096414 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [.], ack 3, win 510, options [nop,nop,TS val 2137215856 ecr 1356308721], length 0
+23:25:33.096692 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [P.], seq 2:4, ack 3, win 510, options [nop,nop,TS val 2137215857 ecr 1356308721], length 2
+23:25:33.099303 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [.], ack 4, win 502, options [nop,nop,TS val 1356308726 ecr 2137215857], length 0
+23:25:36.131031 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [P.], seq 3:4, ack 4, win 502, options [nop,nop,TS val 1356311757 ecr 2137215857], length 1
+23:25:36.131106 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [.], ack 4, win 510, options [nop,nop,TS val 2137218891 ecr 1356311757], length 0
+23:25:36.131276 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [P.], seq 4:7, ack 4, win 510, options [nop,nop,TS val 2137218891 ecr 1356311757], length 3
+23:25:36.133506 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [.], ack 7, win 502, options [nop,nop,TS val 1356311761 ecr 2137218891], length 0
+23:25:37.639417 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [P.], seq 4:5, ack 7, win 502, options [nop,nop,TS val 1356313265 ecr 2137218891], length 1
+23:25:37.639470 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [.], ack 5, win 510, options [nop,nop,TS val 2137220399 ecr 1356313265], length 0
+23:25:37.639614 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [P.], seq 7:8, ack 5, win 510, options [nop,nop,TS val 2137220400 ecr 1356313265], length 1
+23:25:37.639743 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [F.], seq 8, ack 5, win 510, options [nop,nop,TS val 2137220400 ecr 1356313265], length 0
+23:25:37.641978 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [.], ack 8, win 502, options [nop,nop,TS val 1356313270 ecr 2137220400], length 0
+23:25:37.642633 IP 192.168.1.96.36238 > localhost.localdomain.distinct: Flags [F.], seq 5, ack 9, win 502, options [nop,nop,TS val 1356313270 ecr 2137220400], length 0
+23:25:37.642682 IP localhost.localdomain.distinct > 192.168.1.96.36238: Flags [.], ack 6, win 510, options [nop,nop,TS val 2137220403 ecr 1356313270], length 0
+

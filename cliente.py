@@ -1,5 +1,6 @@
 #Programa que solicita conexión del lado del cliente
 import socket
+import os
 
 # codigos que usaremos
 SOLICITAR_CAPTURA = 10
@@ -16,14 +17,14 @@ ERROR_CONEXION = 40
 ERROR_CODIGO = 41
 
 #Pokemones disponibles
-pokemones = {
-    1: ("charizard", "img/charizard.png"),
-    2: ("dragonite", "img/dragonite.png"),
-    3: ("eve", "img/eve.png"),
-    4: ("oddish", "img/oddish.png"),
-    5: ("peliper", "img/peliper.png"),
-    6: ("pikachu", "img/pikachu.png"),
-    7: ("togepi", "img/togepi.png")
+pokemons = {
+    1: {'id': 1, 'name': 'pikachu'},
+    2: {'id': 2, 'name': 'peliper'},
+    3: {'id': 3, 'name': 'oddish'},
+    4: {'id': 4, 'name': 'eve'},
+    5: {'id': 5, 'name': 'dragonite'},
+    6: {'id': 6, 'name': 'charizard'},
+    7: {'id': 7, 'name': 'togepi'}
 }
 
 #Entrenadores disponibles
@@ -39,21 +40,17 @@ entrenadores = {
         'atrapados': []}}
 
 
-
+#conexion servidor
 def conectarServidor(socket):
-    print("Entrando conectarServidor")
-#cominzo de la conexion con el codigo 10 representado en 1 byte
+#comienzo de la conexión con el codigo 10 representado en 1 byte
     codigo = bytes([10])
 #Aqui el codigo que mandamos esta conformado por el codigo de inicio 10
     socket.send(codigo)
-    print("saliendo conectarServidor")
     return None
 
-
+#Seleccionar entrenador
 def obtenerEntrenador(socket):
-    print("entrando obtenerEntrenador")
     respuesta = socket.recv(2)
-    print(respuesta[0])
     if respuesta[0] != SOLICITAR_ENTRENADOR: #codigo 11
             print("El codigo enviado no es el correcto")
             return None
@@ -66,18 +63,74 @@ def obtenerEntrenador(socket):
 #Aqui el codigo que mandamos esta conformado por
 #el id del entrenador en forma de 1 byte
     codigo =bytes([IDentrenador])
-    #codigo = (IDentrenador).to_bytes(1, byteorder="little")
-    print (codigo)
     socket.send(codigo)
     print("saliendo obtenerEntrenador")
-    return entrenadores[IDentrenador]["entrenador"]
-    #return None
+    print("Bienvenido "+ entrenadores[IDentrenador]["entrenador"])
 
-def get_pokemon(pokemon_id):
-    """
-        Get a pokemon by its id
-    """
-    return pokemons.get(pokemon_id, {})
+    return entrenadores.get(IDentrenador)
+
+#Convertimos bytes a int
+def bytes_converter(bytes):
+    conversion = 0
+    for b in bytes:
+        conversion = conversion * 256 + int(b)
+    return conversion
+
+#Intentamos capturar al pokemon
+def capture_pokemon(sock, trainer):
+    respuesta = sock.recv(2)
+    pokemon = pokemons.get(respuesta[1])
+    print("Apareció " + pokemon.get('name', '') + " en tu camino, ¿Lo quieres atrapar? (y/n)")
+    decision = input()
+    atrapar_pokemon = 'y' ==  decision
+    if not atrapar_pokemon:
+        codigo = bytes([NO])
+        print("¡Hasta la próxima!")
+        sock.send(codigo)
+        return None
+    codigo = bytes([SI])
+    sock.send(codigo)
+    respuesta = sock.recv(3)
+    while respuesta[0] == CAPTURAR_DE_NUEVO:
+        #mensajes
+        print(  pokemon.get('name', ''), "fue muy fuerte y no se dejo capturar")
+        print("Te quedan", respuesta[2], "intento(s).\n")
+        print("¿Quieres intentarlo una vez más y  capturar a " + pokemon.get('name', '') + "? (y/n) ")
+        intento = input()
+        atrapar_pokemon = 'y' == intento
+        if not atrapar_pokemon:
+            codigo = bytes([NO])
+            sock.send(codigo)
+            print("¡Hasta la próxima!")
+            return None
+        codigo = bytes([SI])
+        sock.send(codigo)
+        respuesta = sock.recv(3)
+    if respuesta[0] == ENVIAR_POKEMON:
+        print("¡Has atrapado a "+pokemon.get('name', ''), "!")
+        print("¡Continua tu camino como entrenador pokemon!")
+
+
+        #tam imagen
+        tam = bytes_converter(respuesta[2:3] + sock.recv(3))
+        tam = 200000
+        img_bytes = sock.recv(tam)
+        archivo = open("pokemones_capturados/" + pokemon['name'] + ".png", "wb")
+        archivo.write(img_bytes)
+        archivo.close()
+        print("Tu pokemon se guardó en : pokemones_capturados/" + pokemon['name'] + ".png")
+    elif respuesta[0] == INTENTOS_AGOTADOS:
+        print("El pokemon escapó ")
+        print("¡Hasta la próxima!")
+    elif respuesta[0] == ERROR_CONEXION:
+        print("Se cerró la conexión con el servidor")
+    else:
+        print("Algo salió mal  ")
+    return None
+
+
+
+
 
 if __name__ == "__main__":
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -90,15 +143,14 @@ if __name__ == "__main__":
         print("Servidor no disponible")
         exit(404)
 
-    print("Bienvenido entrenador al fascinante mundo de pokemon =)")
+    print("Bienvenido entrenador al emocionante Pokemundo")
 
     try:
         conectarServidor(s)
         entrenador= obtenerEntrenador(s)
-        print ("Bienvenido "+ entrenador)
-        
+        capture_pokemon(s, entrenador)
     except:
-        print("A ocurrido un error en la conexion y se cerrara.")
+        print("Se cierra la conexión")
         s.send((ERROR_CONEXION).to_bytes(1, byteorder="little"))
     finally:
         s.close()
