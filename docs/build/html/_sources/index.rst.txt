@@ -1,0 +1,26 @@
+.. PokemonGo documentation master file, created by
+   sphinx-quickstart on Mon Dec  9 13:56:56 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to PokemonGo's documentation!
+=====================================
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+UNIVERSIDAD NACIONAL AUTONOMA DE MEXICO
+
+Este proyecto es correpondiente al proyecto 2 de la materia de Redes de Computadoras  
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+* :ref:`Cliente`
+* :ref:`Servidor`
+    
