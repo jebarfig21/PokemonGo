@@ -18,24 +18,14 @@ ERROR_CONEXION = 40
 ERROR_CODIGO = 41
 
 #Pokemones disponibles
-pokemones = {
-    1: ("charizard", "img/charizard.png"),
-    2: ("dragonite", "img/dragonite.png"),
-    3: ("eve", "img/eve.png"),
-    4: ("oddish", "img/oddish.png"),
-    5: ("peliper", "img/peliper.png"),
-    6: ("pikachu", "img/pikachu.png"),
-    7: ("togepi", "img/togepi.png")
-}
-
 pokemons = {
-    1: {'id': 1, 'name': 'pikachu'},
-    2: {'id': 2, 'name': 'peliper'},
-    3: {'id': 3, 'name': 'oddish'},
-    4: {'id': 4, 'name': 'eve'},
-    5: {'id': 5, 'name': 'dragonite'},
-    6: {'id': 6, 'name': 'charizard'},
-    7: {'id': 7, 'name': 'togepi'}
+    1: {'id': 1, 'nombre': 'pikachu'},
+    2: {'id': 2, 'nombre': 'peliper'},
+    3: {'id': 3, 'nombre': 'oddish'},
+    4: {'id': 4, 'nombre': 'eve'},
+    5: {'id': 5, 'nombre': 'dragonite'},
+    6: {'id': 6, 'nombre': 'charizard'},
+    7: {'id': 7, 'nombre': 'togepi'}
 }
 
 #Entrenadores disponibles
@@ -91,28 +81,37 @@ class servidor:
             # Creamos un nuevo thread por cada conexion
             threading.Thread(target = self.conexionCliente, args = (client, address)).start()
 
+    #metodo que maneja  la conexion con el cliente
     def conexionCliente(self, client, address):
         try:
+            #comprobamos que se haya recibido el codigo 10 de inicio
             comprueba = self.comprueba10(client, address)
             if comprueba == False:
                 codigo = bytes([ERROR_CODIGO])
                 client.send(codigo)
                 client.close()
                 return False
-
+            #pedimos el id del entrenador
             entrenador = self.pedirEntrenador(client, address)
             if entrenador == {}:
                 print(client.getpeername()[0] + ' : ' + 'desconectado')
                 client.close()
                 return False
-
+            
+            print(str(entrenador))
+            #mandamos al pokemon que se quiere capturar 
             pokemon = self.captura_pokemon(client, address)
             if pokemon != {}:
+                #si se capturo al pokemon lo agregamos al pokedex del entrenador
                 entrenador['atrapados'].append(pokemon)
+                print(entrenador.get('entrenador', "") + " tiene a a los pokemones " + str(entrenador.get('atrapados', [])))
+                print(client.getpeername()[0] + ' : ' + 'desconectado')
             client.close()
+            #terminamos la conexion
             return True
 
         except socket.timeout:
+            #si se acaba el timeout
             print(client.getpeername()[0] + ' : ' +'TIMEOUT')
             error = bytes([ERROR_CODIGO])
             client.send(error)
@@ -135,7 +134,7 @@ class servidor:
 
     #Mandar info imagen
     def mandar_pokemon(self, pokemon):
-        img = pokemon["name"] + ".png"
+        img = pokemon["nombre"] + ".png"
         ubicacion = "img/"
         dir= ubicacion + img
         codigo = bytes([ENVIAR_POKEMON])
@@ -154,11 +153,11 @@ class servidor:
         codigo += bytes([pokemon_salvaje.get('id')])
         client.send(codigo)
         respuesta = client.recv(2)
-        actual_num_attemps = randint(2, 7)
+        actual_num_attemps = randint(2, 10)
         while respuesta[0] == SI and actual_num_attemps > 0 :
             # numero de intentos aleatorios
             catch_pokemon = randint(0,100)
-            if catch_pokemon < 30:
+            if catch_pokemon < 35:
                 codigo = self.mandar_pokemon(pokemon_salvaje)
                 client.send(codigo)
                 return pokemon_salvaje
@@ -173,6 +172,7 @@ class servidor:
             respuesta = client.recv(2)
         if respuesta[0] == SI or actual_num_attemps <= 0:
             client.send(bytes([INTENTOS_AGOTADOS]))
+            print(client.getpeername()[0] + ' : ' + 'desconectado')
             return {}
         elif respuesta[0] == NO:
             print("El entrenador no lo quiso capturar")

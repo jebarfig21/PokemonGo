@@ -16,17 +16,6 @@ ERROR_CONEXION = 40
 ERROR_CODIGO = 41
 
 #Pokemones disponibles
-pokemones = {
-    1: ("charizard", "img/charizard.png"),
-    2: ("dragonite", "img/dragonite.png"),
-    3: ("eve", "img/eve.png"),
-    4: ("oddish", "img/oddish.png"),
-    5: ("peliper", "img/peliper.png"),
-    6: ("pikachu", "img/pikachu.png"),
-    7: ("togepi", "img/togepi.png")
-}
-
-
 pokemons = {
     1: {'id': 1, 'name': 'pikachu'},
     2: {'id': 2, 'name': 'peliper'},
