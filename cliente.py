@@ -18,13 +18,13 @@ ERROR_CODIGO = 41
 
 #Pokemones disponibles
 pokemons = {
-    1: {'id': 1, 'name': 'pikachu'},
-    2: {'id': 2, 'name': 'peliper'},
-    3: {'id': 3, 'name': 'oddish'},
-    4: {'id': 4, 'name': 'eve'},
-    5: {'id': 5, 'name': 'dragonite'},
-    6: {'id': 6, 'name': 'charizard'},
-    7: {'id': 7, 'name': 'togepi'}
+    1: {'id': 1, 'nombre': 'pikachu'},
+    2: {'id': 2, 'nombre': 'peliper'},
+    3: {'id': 3, 'nombre': 'oddish'},
+    4: {'id': 4, 'nombre': 'eve'},
+    5: {'id': 5, 'nombre': 'dragonite'},
+    6: {'id': 6, 'nombre': 'charizard'},
+    7: {'id': 7, 'nombre': 'togepi'}
 }
 
 #Entrenadores disponibles
@@ -80,7 +80,7 @@ def bytes_converter(bytes):
 def capture_pokemon(sock, trainer):
     respuesta = sock.recv(2)
     pokemon = pokemons.get(respuesta[1])
-    print("Apareció " + pokemon.get('name', '') + " en tu camino, ¿Lo quieres atrapar? (y/n)")
+    print("Apareció " + pokemon.get('nombre', '') + " en tu camino, ¿Lo quieres atrapar? (y/n)")
     decision = input()
     atrapar_pokemon = 'y' ==  decision
     if not atrapar_pokemon:
@@ -93,9 +93,9 @@ def capture_pokemon(sock, trainer):
     respuesta = sock.recv(3)
     while respuesta[0] == CAPTURAR_DE_NUEVO:
         #mensajes
-        print(  pokemon.get('name', ''), "fue muy fuerte y no se dejo capturar")
+        print(  pokemon.get('nombre', ''), "fue muy fuerte y no se dejo capturar")
         print("Te quedan", respuesta[2], "intento(s).\n")
-        print("¿Quieres intentarlo una vez más y  capturar a " + pokemon.get('name', '') + "? (y/n) ")
+        print("¿Quieres intentarlo una vez más y  capturar a " + pokemon.get('nombre', '') + "? (y/n) ")
         intento = input()
         atrapar_pokemon = 'y' == intento
         if not atrapar_pokemon:
@@ -107,7 +107,7 @@ def capture_pokemon(sock, trainer):
         sock.send(codigo)
         respuesta = sock.recv(3)
     if respuesta[0] == ENVIAR_POKEMON:
-        print("¡Has atrapado a "+pokemon.get('name', ''), "!")
+        print("¡Has atrapado a "+pokemon.get('nombre', ''), "!")
         print("¡Continua tu camino como entrenador pokemon!")
 
 
@@ -115,10 +115,10 @@ def capture_pokemon(sock, trainer):
         tam = bytes_converter(respuesta[2:3] + sock.recv(3))
         tam = 200000
         img_bytes = sock.recv(tam)
-        archivo = open("pokemones_capturados/" + pokemon['name'] + ".png", "wb")
+        archivo = open("pokemones_capturados/" + pokemon['nombre'] + ".png", "wb")
         archivo.write(img_bytes)
         archivo.close()
-        print("Tu pokemon se guardó en : pokemones_capturados/" + pokemon['name'] + ".png")
+        print("Tu pokemon se guardó en : pokemones_capturados/" + pokemon['nombre'] + ".png")
     elif respuesta[0] == INTENTOS_AGOTADOS:
         print("El pokemon escapó ")
         print("¡Hasta la próxima!")
